@@ -7,6 +7,16 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const validateSignup = [
+  check("firstName")
+    .exists({ checkFalsy: true })
+    .isAlpha()
+    .isLength({ min: 3, max: 30 })
+    .withMessage("Gotta provide a valid first name with at least 3 letters"),
+  check("lastName")
+    .exists({ checkFalsy: true })
+    .isAlpha()
+    .isLength({ min: 3, max: 30 })
+    .withMessage("Gotta provide a valid last name with at least 3 letters"),
     check('email')
       .exists({ checkFalsy: true })
       .isEmail()
@@ -33,12 +43,14 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
-      const { email, password, username } = req.body;
+      const { firstName, lastName, email, password, username } = req.body;
       const hashedPassword = bcrypt.hashSync(password);
-      const user = await User.create({ email, username, hashedPassword });
+      const user = await User.create({ firstName, lastName, email, username, hashedPassword });
 
       const safeUser = {
         id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         username: user.username,
       };
