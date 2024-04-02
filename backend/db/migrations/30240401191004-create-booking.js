@@ -50,21 +50,22 @@ module.exports = {
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
     },
-    options
+      options
     );
-    await queryInterface.addConstraint("Bookings", {
-      type: "unique",
-      fields: ["spotId", "userId", "startDate", "endDate"],
-      name: "no_double_booking_user",
-    });
-
-
-    await queryInterface.addConstraint("Bookings", {
-      type: "unique",
-      fields: ["spotId", "startDate"],
-      name: "no_double_booking_spot"
-    })
   },
+  //   await queryInterface.addConstraint("Bookings", {
+  //     type: "unique",
+  //     fields: ["spotId", "userId", "startDate", "endDate"],
+  //     name: "no_double_booking_user",
+  //   });
+
+
+  //   await queryInterface.addConstraint("Bookings", {
+  //     type: "unique",
+  //     fields: ["spotId", "startDate"],
+  //     name: "no_double_booking_spot"
+  //   })
+  // },
   async down(queryInterface, Sequelize) {
     options.tableName ="Bookings"
     await queryInterface.dropTable(options);
