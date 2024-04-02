@@ -44,9 +44,7 @@ module.exports = {
           defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
       },
-      {
-        validate: true,
-      }
+      options
     );
   },
   async down(queryInterface, Sequelize) {
