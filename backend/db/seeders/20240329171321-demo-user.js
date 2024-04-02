@@ -2,6 +2,7 @@
 
 const { User } = require('../models');
 const bcrypt = require("bcryptjs");
+const { faker } = require('@faker-js/faker');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -9,37 +10,33 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await User.bulkCreate([
-      {
-        firstName: 'John',
-        lastName: 'Mayer',
-        email: "demo@user.io",
-        username: "Demo-lition",
-        hashedPassword: bcrypt.hashSync("password"),
-      },
-      {
-        firstName: 'Thomas',
-        lastName: 'Jeff',
-        email: "user1@user.io",
-        username: "FakeUser1",
-        hashedPassword: bcrypt.hashSync("password2"),
-      },
-      {
-        firstName: 'Bertram',
-        lastName: 'Gilfoyle',
-        email: "user2@user.io",
-        username: "FakeUser2",
-        hashedPassword: bcrypt.hashSync("password3"),
+  async up(queryInterface, Sequelize) {
+
+
+    let userSeed = []
+
+    // This for loop decides how many datapoints to create.
+    // If you want to change the amount, just change the number in the for loop!
+    for (let i = 1; i < 4; i++) {
+
+      // The keys in this user object are set equal to the fake information
+      let newUser = {
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        email: faker.internet.email(),
+        username: faker.internet.userName(),
+        hashedPassword: bcrypt.hashSync(`password${i}`),
       }
-    ], { validate: true });
+
+      // For each fake user you create, you're going to push them into the user array you declare above
+      userSeed.push(newUser)
+    }
+    await User.bulkCreate(userSeed, { validate: true });
   },
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
-    }, {});
+    return queryInterface.bulkDelete(options, {}, {});
   }
 };
