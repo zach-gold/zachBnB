@@ -42,7 +42,8 @@ const router = express.Router();
 router.post(
     '/',
     validateSignup,
-    async (req, res) => {
+  async (req, res) => {
+    try {
       const { firstName, lastName, email, password, username } = req.body;
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({ firstName, lastName, email, username, hashedPassword });
@@ -61,6 +62,26 @@ router.post(
         user: safeUser
       });
     }
-  );
 
-module.exports = router;
+    catch (error) {
+      if (error.name === "SequelizeUniqueConstraintError") {
+        if (error.errors[0].path === "email") {
+          return res.status(500).json({
+            message: "User already exists",
+            errors: {
+              email: "User with that email already exists",
+            },
+          });
+        } else if (error.errors[0].path === "username") {
+          return res.status(500).json({
+            message: "User already exists",
+            errors: {
+              username: "User with that username already exists",
+            },
+          });
+        }
+      }
+    }
+  });
+
+  module.exports = router;
