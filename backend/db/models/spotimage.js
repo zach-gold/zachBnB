@@ -30,7 +30,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false
     }
-  }, {
+  },
+
+  {
     sequelize,
     modelName: 'SpotImage',
   });

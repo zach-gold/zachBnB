@@ -4,7 +4,7 @@ let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
 }
-const { User } = require('../models');
+//const { User } = require('../models');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -22,6 +22,7 @@ module.exports = {
           model: "Spots",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -30,6 +31,7 @@ module.exports = {
           model: "Users",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
       startDate: {
         type: Sequelize.DATEONLY,
@@ -53,6 +55,8 @@ module.exports = {
       options
     );
   },
+
+  //might need to put this in its own migration
   //   await queryInterface.addConstraint("Bookings", {
   //     type: "unique",
   //     fields: ["spotId", "userId", "startDate", "endDate"],
