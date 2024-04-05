@@ -195,7 +195,19 @@ router.get("/:spotId", async (req, res) => {
 
 //get all spots
 router.get("/", async (req, res) => {
-  const spots = await Spot.findAll({});
+  let { page, size } = req.query;
+
+  page = parseInt(page) || 1;
+  size = parseInt(size) || 20;
+
+  if (page > 10) page = 10;
+  if (size > 20) size = 20;
+
+  let pagination = {
+    limit: size,
+    offset: size * (page - 1),
+  };
+  const spots = await Spot.findAll({...pagination});
 
   //refactor later for DRYness
   for (let spot of spots) {
@@ -247,7 +259,11 @@ router.get("/", async (req, res) => {
       previewImage: spot.previewImage.url,
     };
   });
-  res.status(200).json({ Spots: allSpots });
+
+  let paginatedResponse = { Spots: allSpots };
+  paginatedResponse.page = page;
+  paginatedResponse.size = size;
+  res.status(200).json(paginatedResponse);
 });
 
 router.post("/", requireAuth, spotValidator, async (req, res) => {
