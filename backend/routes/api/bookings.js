@@ -21,7 +21,7 @@ const formatStartEndDate = (date) => {
   const formattedDate = new Date(date);
   const year = formattedDate.getFullYear();
   const month = formattedDate.getMonth() + 1;
-  const day = formattedDate.getDate() + 1;
+  const day = formattedDate.getDate();
 
   return `${year}-${month}-${day}`;
 };
@@ -119,18 +119,60 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
     });
   }
 
-  let doubleBookings = await Booking.findAll({
+  // let doubleBookings = await Booking.findAll({
+  //   where: {
+  //     id: { [Op.ne]: bookingId }, // Exclude the current booking from conflict check
+  //     spotId: booking.spotId,
+  //     [Op.or]: [
+  //       { startDate: { [Op.between]: [startDate, endDate] } },
+  //       { endDate: { [Op.between]: [startDate, endDate] } },
+  //     ],
+  //   },
+  // });
+
+  // if (doubleBookings.length > 0) {
+  //   return res.status(403).json({
+  //     message: "Sorry, this spot is already booked for the specified dates",
+  //     errors: {
+  //       startDate: "Start date conflicts with an existing booking",
+  //       endDate: "End date conflicts with an existing booking",
+  //     },
+  //   });
+  // }
+
+  let exists = await Booking.findOne({
     where: {
-      id: { [Op.ne]: bookingId }, // Exclude the current booking from conflict check
-      spotId: booking.spotId,
+      spotId,
       [Op.or]: [
-        { startDate: { [Op.between]: [startDate, endDate] } },
-        { endDate: { [Op.between]: [startDate, endDate] } },
+        {
+          [Op.and]: [
+            { startDate: { [Op.lte]: startDate } },
+            { endDate: { [Op.gte]: endDate } },
+          ],
+        },
+        {
+          [Op.and]: [
+            { startDate: { [Op.gte]: startDate } },
+            { endDate: { [Op.lte]: endDate } },
+          ],
+        },
+        {
+          [Op.and]: [
+            { startDate: { [Op.lt]: endDate } },
+            { endDate: { [Op.gt]: startDate } },
+          ],
+        },
+        {
+          [Op.or]: [
+            { startDate: { [Op.between]: [startDate, endDate] } },
+            { endDate: { [Op.between]: [startDate, endDate] } },
+          ],
+        },
       ],
     },
   });
 
-  if (doubleBookings.length > 0) {
+  if (exists) {
     return res.status(403).json({
       message: "Sorry, this spot is already booked for the specified dates",
       errors: {
