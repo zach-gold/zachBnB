@@ -11,6 +11,28 @@ const {
   ReviewImage,
 } = require("../../db/models");
 
+const formatDate = (date) => {
+  const formattedDate = new Date(date);
+  const year = formattedDate.getFullYear();
+  const month = formattedDate.getMonth() + 1;
+  const day = formattedDate.getDate();
+  const hours = formattedDate.getHours();
+  const minutes = ('0'+formattedDate.getMinutes()).slice(-2);
+  const sec = ('0'+formattedDate.getSeconds()).slice(-2);
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${sec}`;
+};
+
+
+const formatStartEndDate = (date) => {
+  const formattedDate = new Date(date);
+  const year = formattedDate.getFullYear();
+  const month = formattedDate.getMonth() + 1;
+  const day = formattedDate.getDate() + 1;
+
+  return `${year}-${month}-${day}`;
+};
+
 //rewrite later to use express validators
 const spotValidator = (req, res, next) => {
   const { address, city, state, country, lat, lng, name, description, price } =
@@ -108,8 +130,8 @@ router.get("/current", requireAuth, async (req, res) => {
       name: spot.name,
       description: spot.description,
       price: spot.price,
-      createdAt: spot.createdAt,
-      updatedAt: spot.updatedAt,
+      createdAt: formatDate(spot.createdAt),
+      updatedAt: formatDate(spot.updatedAt),
       avgRating: spot.avgRating || 0,
       previewImage: spot.previewImage.url,
     };
@@ -183,8 +205,8 @@ router.get("/:spotId", async (req, res) => {
     name: spot.name,
     description: spot.description,
     price: spot.price,
-    createdAt: spot.createdAt,
-    updatedAt: spot.updatedAt,
+    createdAt: formatDate(spot.createdAt),
+    updatedAt: formatDate(spot.updatedAt),
     numReviews: spot.numReviews,
     avgStarRating: spot.avgRating || 0,
     SpotImages: spot.images,
@@ -253,8 +275,8 @@ router.get("/", async (req, res) => {
       name: spot.name,
       description: spot.description,
       price: spot.price,
-      createdAt: spot.createdAt,
-      updatedAt: spot.updatedAt,
+      createdAt: formatDate(spot.createdAt),
+      updatedAt: formatDate(spot.updatedAt),
       avgRating: spot.avgRating || 0,
       previewImage: spot.previewImage.url,
     };
@@ -269,7 +291,7 @@ router.get("/", async (req, res) => {
 router.post("/", requireAuth, spotValidator, async (req, res) => {
   let { address, city, state, country, lat, lng, name, description, price } =
     req.body;
-  const newSpot = await Spot.create({
+  const spot = await Spot.create({
     ownerId: req.user.id,
     address,
     city,
@@ -282,7 +304,22 @@ router.post("/", requireAuth, spotValidator, async (req, res) => {
     price,
   });
 
-  res.status(201).json(newSpot);
+  let resSpot = {
+    id: spot.id,
+    ownerId: spot.ownerId,
+    address: spot.address,
+    city: spot.city,
+    state: spot.state,
+    country: spot.country,
+    lat: spot.lat,
+    lng: spot.lng,
+    name: spot.name,
+    description: spot.description,
+    price: spot.price,
+    createdAt: formatDate(spot.createdAt),
+    updatedAt: formatDate(spot.updatedAt),
+  };
+  return res.status(200).json(resSpot);
 });
 
 router.put("/:spotId", requireAuth, spotValidator, async (req, res) => {
@@ -328,8 +365,8 @@ router.put("/:spotId", requireAuth, spotValidator, async (req, res) => {
     name: spot.name,
     description: spot.description,
     price: spot.price,
-    createdAt: spot.createdAt,
-    updatedAt: spot.updatedAt,
+    createdAt: formatDate(spot.createdAt),
+    updatedAt: formatDate(spot.updatedAt),
   };
   return res.status(200).json(resSpot);
 });
@@ -416,10 +453,10 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
         id: booking.id,
         spotId: booking.spotId,
         userId: booking.userId,
-        startDate: booking.startDate,
-        endDate: booking.endDate,
-        createdAt: booking.createdAt,
-        updatedAt: booking.createdAt,
+        startDate: formatStartEndDate(booking.startDate),
+        endDate: formatStartEndDate(booking.endDate),
+        createdAt: formatDate(booking.createdAt),
+      updatedAt: formatDate(booking.updatedAt),
       })),
     };
     res.status(200).json(response);
@@ -434,8 +471,8 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
     let response = {
       Bookings: bookings.map((booking) => ({
         spotId: booking.spotId,
-        startDate: booking.startDate,
-        endDate: booking.endDate,
+        startDate: formatStartEndDate(booking.startDate),
+        endDate: formatStartEndDate(booking.endDate),
       })),
     };
     res.status(200).json(response);
@@ -483,8 +520,8 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
     spotId: newReview.spotId,
     review: newReview.review,
     stars: newReview.stars,
-    createdAt: newReview.createdAt,
-    updatedAt: newReview.updatedAt,
+    createdAt: formatDate(newReview.createdAt),
+      updatedAt: formatDate(newReview.updatedAt),
   });
 });
 
@@ -517,8 +554,8 @@ router.get("/:spotId/reviews", async (req, res) => {
     spotId: review.spotId,
     review: review.review,
     stars: review.stars,
-    createdAt: review.createdAt,
-    updatedAt: review.updatedAt,
+    createdAt: formatDate(review.createdAt),
+      updatedAt: formatDate(review.updatedAt),
     User: {
       id: review.User.id,
       firstName: review.User.firstName,
@@ -611,10 +648,10 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
       id: newBooking.id,
       spotId: newBooking.spotId,
       userId: newBooking.userId,
-      startDate: newBooking.startDate,
-      endDate: newBooking.endDate,
-      createdAt: newBooking.createdAt,
-      updatedAt: newBooking.updatedAt,
+      startDate: formatStartEndDate(newBooking.startDate),
+        endDate: formatStartEndDate(newBooking.endDate),
+        createdAt: formatDate(newBooking.createdAt),
+      updatedAt: formatDate(newBooking.updatedAt),
     };
 
     res.status(200).json(response);

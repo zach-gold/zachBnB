@@ -7,29 +7,30 @@ const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const { User } = require("../../db/models");
 
 const validateSignup = [
+  check("email")
+    .exists({ checkFalsy: true })
+    .isEmail()
+    .withMessage("Invalid email"),
+  check("username")
+    .exists({ checkFalsy: true })
+    .isLength({ min: 4 })
+    .withMessage("Username is required"),
+  check("username").not().isEmail().withMessage("Username cannot be an email."),
   check("firstName")
     .exists({ checkFalsy: true })
     .isAlpha()
     .isLength({ min: 3, max: 30 })
-    .withMessage("Please provide a valid first name with at least 3 letters"),
+    .withMessage("FirstName is required"),
   check("lastName")
     .exists({ checkFalsy: true })
     .isAlpha()
     .isLength({ min: 3, max: 30 })
-    .withMessage("Please provide a valid last name with at least 3 letters"),
-  check("email")
-    .exists({ checkFalsy: true })
-    .isEmail()
-    .withMessage("Please provide a valid email."),
-  check("username")
-    .exists({ checkFalsy: true })
-    .isLength({ min: 4 })
-    .withMessage("Please provide a username with at least 4 characters."),
-  check("username").not().isEmail().withMessage("Username cannot be an email."),
-  check("password")
-    .exists({ checkFalsy: true })
-    .isLength({ min: 6 })
-    .withMessage("Password must be 6 characters or more."),
+    .withMessage("Last Name is required"),
+
+  // check("password")
+  //   .exists({ checkFalsy: true })
+  //   .isLength({ min: 6 })
+  //   .withMessage("Password must be 6 characters or more."),
   handleValidationErrors,
 ];
 

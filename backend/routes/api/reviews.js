@@ -9,6 +9,18 @@ const {
   SpotImage,
 } = require("../../db/models");
 
+const formatDate = (date) => {
+  const formattedDate = new Date(date);
+  const year = formattedDate.getFullYear();
+  const month = formattedDate.getMonth() + 1;
+  const day = formattedDate.getDate();
+  const hours = formattedDate.getHours();
+  const minutes = ('0'+formattedDate.getMinutes()).slice(-2);
+  const sec = ('0'+formattedDate.getSeconds()).slice(-2);
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${sec}`;
+};
+
 router.get("/current", requireAuth, async (req, res) => {
   let userId = req.user.id;
 
@@ -131,8 +143,8 @@ router.put("/:reviewId", requireAuth, async (req, res) => {
     spotId: exists.spotId,
     review: exists.review,
     stars: exists.stars,
-    createdAt: exists.createdAt,
-    updatedAt: exists.updatedAt,
+    createdAt: formatDate(exists.createdAt),
+    updatedAt: formatDate(exists.updatedAt),
   });
 });
 

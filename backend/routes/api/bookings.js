@@ -4,6 +4,28 @@ const { requireAuth } = require("../../utils/auth");
 const { Op } = require("sequelize");
 const { Spot, Review, User, SpotImage, Booking } = require("../../db/models");
 
+const formatDate = (date) => {
+  const formattedDate = new Date(date);
+  const year = formattedDate.getFullYear();
+  const month = formattedDate.getMonth() + 1;
+  const day = formattedDate.getDate();
+  const hours = formattedDate.getHours();
+  const minutes = ('0'+formattedDate.getMinutes()).slice(-2);
+  const sec = ('0'+formattedDate.getSeconds()).slice(-2);
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${sec}`;
+};
+
+
+const formatStartEndDate = (date) => {
+  const formattedDate = new Date(date);
+  const year = formattedDate.getFullYear();
+  const month = formattedDate.getMonth() + 1;
+  const day = formattedDate.getDate() + 1;
+
+  return `${year}-${month}-${day}`;
+};
+
 router.get("/current", requireAuth, async (req, res) => {
   let userId = req.user.id;
 
@@ -54,10 +76,10 @@ router.get("/current", requireAuth, async (req, res) => {
         previewImage: booking.Spot.previewImage[0].url,
       },
       userId: booking.userId,
-      startDate: booking.startDate,
-      endDate: booking.endDate,
-      createdAt: booking.createdAt,
-      updatedAt: booking.updatedAt,
+      startDate: formatStartEndDate(booking.startDate),
+        endDate: formatStartEndDate(booking.endDate),
+        createdAt: formatDate(booking.createdAt),
+      updatedAt: formatDate(booking.updatedAt),
     })),
   };
 
@@ -124,10 +146,10 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
     id: booking.id,
     spotId: booking.spotId,
     userId: booking.userId,
-    startDate: booking.startDate,
-    endDate: booking.endDate,
-    createdAt: booking.createdAt,
-    updatedAt: booking.updatedAt,
+    startDate: formatStartEndDate(booking.startDate),
+        endDate: formatStartEndDate(booking.endDate),
+        createdAt: formatDate(booking.createdAt),
+      updatedAt: formatDate(booking.updatedAt),
   });
 });
 
