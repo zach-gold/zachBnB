@@ -1,6 +1,6 @@
 "use strict";
 const { Spot } = require("../models");
-const { faker } = require('@faker-js/faker');
+const { faker } = require("@faker-js/faker");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
@@ -18,12 +18,11 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    let spotsSeed = []
+    let spotsSeed = [];
 
     // This for loop decides how many datapoints to create.
     // If you want to change the amount, just change the number in the for loop!
     for (let i = 1; i < 4; i++) {
-
       // The keys in this spot object are set equal to the fake information
       let newSpot = {
         ownerId: i,
@@ -34,13 +33,12 @@ module.exports = {
         lat: faker.location.latitude(),
         lng: faker.location.longitude(),
         name: faker.company.catchPhrase(),
-        description:
-          faker.lorem.paragraph(),
-        price: faker.commerce.price({min:3, max: 299, dec: 2}),
-      }
+        description: faker.lorem.paragraph(),
+        price: faker.commerce.price({ min: 3, max: 299, dec: 2 }),
+      };
 
       // For each fake spot you create, you're going to push them into the user array you declare above
-      spotsSeed.push(newSpot)
+      spotsSeed.push(newSpot);
     }
 
     await Spot.bulkCreate(spotsSeed);

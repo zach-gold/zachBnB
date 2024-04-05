@@ -1,7 +1,7 @@
 "use strict";
 
 const { ReviewImage } = require("../models");
-const { faker } = require('@faker-js/faker');
+const { faker } = require("@faker-js/faker");
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; //define schema in options object
@@ -22,15 +22,15 @@ module.exports = {
       [
         {
           reviewId: 1,
-          url: faker.image.url()
+          url: faker.image.url(),
         },
         {
           reviewId: 2,
-          url:faker.image.url()
+          url: faker.image.url(),
         },
         {
           reviewId: 3,
-          url:faker.image.url()
+          url: faker.image.url(),
         },
       ],
       { validate: true }

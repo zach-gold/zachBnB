@@ -1,6 +1,6 @@
 "use strict";
 const { Review } = require("../models");
-const { faker } = require('@faker-js/faker');
+const { faker } = require("@faker-js/faker");
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; //define schema in options object
