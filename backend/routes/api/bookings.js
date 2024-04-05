@@ -21,7 +21,7 @@ const formatStartEndDate = (date) => {
   const formattedDate = new Date(date);
   const year = formattedDate.getFullYear();
   const month = formattedDate.getMonth() + 1;
-  const day = formattedDate.getDate();
+  const day = formattedDate.getDate() +1;
 
   return `${year}-${month}-${day}`;
 };
@@ -90,6 +90,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   let { bookingId } = req.params;
   let { startDate, endDate } = req.body;
   let userId = req.user.id;
+  let currentDate = new Date();
 
   let booking = await Booking.findByPk(bookingId);
 
@@ -100,7 +101,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
     return res.status(403).json({ message: "Forbidden" });
   }
 
-  if (new Date(booking.endDate) < new Date()) {
+  if (new Date(startDate) < currentDate || new Date(endDate) < currentDate) {
     return res.status(403).json({ message: "Past bookings can't be modified" });
   }
 
@@ -142,7 +143,8 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
 
   let exists = await Booking.findOne({
     where: {
-      spotId,
+      id: { [Op.ne]: bookingId },
+      spotId: booking.spotId,
       [Op.or]: [
         {
           [Op.and]: [

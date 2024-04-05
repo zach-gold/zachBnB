@@ -517,7 +517,7 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
   res.status(201).json({
     id: newReview.id,
     userId: newReview.userId,
-    spotId: newReview.spotId,
+    spotId: +newReview.spotId,
     review: newReview.review,
     stars: newReview.stars,
     createdAt: formatDate(newReview.createdAt),
@@ -646,7 +646,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 
     let response = {
       id: newBooking.id,
-      spotId: newBooking.spotId,
+      spotId: +newBooking.spotId,
       userId: newBooking.userId,
       startDate: formatStartEndDate(newBooking.startDate),
         endDate: formatStartEndDate(newBooking.endDate),
