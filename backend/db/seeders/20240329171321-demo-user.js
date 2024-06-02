@@ -28,6 +28,16 @@ module.exports = {
       // For each fake user you create, you're going to push them into the user array you declare above
       userSeed.push(newUser);
     }
+
+    let demoUser = {
+      firstName: "Demo",
+      lastName: "Lition",
+      email: "demo-lition@zachbnb.onrender.com",
+      username: "Demo-lition",
+      hashedPassword: bcrypt.hashSync("password"),
+    };
+    userSeed.push(demoUser);
+
     await User.bulkCreate(userSeed, { validate: true });
   },
 

@@ -26,9 +26,59 @@ module.exports = {
           preview: true,
         },
         {
+          spotId: 1,
+          url: faker.image.url(),
+          preview: true,
+        },
+        {
+          spotId: 1,
+          url: faker.image.url(),
+          preview: true,
+        },
+        {
+          spotId: 1,
+          url: faker.image.url(),
+          preview: true,
+        },
+        {
+          spotId: 1,
+          url: faker.image.url(),
+          preview: true,
+        },
+        {
           spotId: 2,
           url: faker.image.url(),
-          preview: false,
+          preview: true,
+        },
+        {
+          spotId: 2,
+          url: faker.image.url(),
+          preview: true,
+        },
+        {
+          spotId: 2,
+          url: faker.image.url(),
+          preview: true,
+        },
+        {
+          spotId: 2,
+          url: faker.image.url(),
+          preview: true,
+        },
+        {
+          spotId: 3,
+          url: faker.image.url(),
+          preview: true,
+        },
+        {
+          spotId: 3,
+          url: faker.image.url(),
+          preview: true,
+        },
+        {
+          spotId: 3,
+          url: faker.image.url(),
+          preview: true,
         },
         {
           spotId: 3,

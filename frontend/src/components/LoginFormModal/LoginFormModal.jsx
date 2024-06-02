@@ -9,6 +9,7 @@ function LoginFormModal() {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
@@ -17,6 +18,9 @@ function LoginFormModal() {
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
+        if (parseInt(res.status) === 401) {
+          setErrorMessage("The provided credentials were invalid");
+        }
         const data = await res.json();
         if (data && data.errors) {
           setErrors(data.errors);
@@ -25,8 +29,13 @@ function LoginFormModal() {
   };
 
   return (
-    <>
+    <div className='loginBox'>
       <h1>Log In</h1>
+      {errorMessage && (
+        <p style={{ backgroundColor: "#000000b3", color: "red" }}>
+          {errorMessage}
+        </p>
+      )}
       <form onSubmit={handleSubmit}>
         <label>
           Username or Email
@@ -48,8 +57,16 @@ function LoginFormModal() {
         </label>
         {errors.credential && <p>{errors.credential}</p>}
         <button type="submit">Log In</button>
+        <button
+          type="submit"
+          onClick={() => {
+            setCredential("Demo-lition"), setPassword("password");
+          }}
+        >
+          Login as Demo User
+        </button>
       </form>
-    </>
+    </div>
   );
 }
 

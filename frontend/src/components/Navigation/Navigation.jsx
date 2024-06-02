@@ -5,33 +5,33 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './Navigation.css';
+//import homeIcon from '../../assets/home-icon.png'
 
 function Navigation({ isLoaded }) {
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
 
-  const sessionLinks = sessionUser ?
-    (
+  const sessionLinks = sessionUser ? (
+    <li>
+      <ProfileButton user={sessionUser} />
+    </li>
+  ) : (
+    <ul>
       <li>
-        <ProfileButton user={sessionUser} />
+        <OpenModalButton
+          buttonText="Log In"
+          modalComponent={<LoginFormModal />}
+        />
+        {/* <NavLink to="/login">Log In</NavLink> */}
       </li>
-    ) : (
-      <>
-        <li>
-          <OpenModalButton
-            buttonText="Log In"
-            modalComponent={<LoginFormModal />}
-          />
-          {/* <NavLink to="/login">Log In</NavLink> */}
-        </li>
-        <li>
-          <OpenModalButton
-            buttonText="Sign Up"
-            modalComponent={<SignupFormModal />}
-          />
-          {/* <NavLink to="/signup">Sign Up</NavLink> */}
-        </li>
-      </>
-    );
+      <li>
+        <OpenModalButton
+          buttonText="Sign Up"
+          modalComponent={<SignupFormModal />}
+        />
+        {/* <NavLink to="/signup">Sign Up</NavLink> */}
+      </li>
+    </ul>
+  );
 
   return (
     <ul>
@@ -40,6 +40,7 @@ function Navigation({ isLoaded }) {
       </li>
       {isLoaded && sessionLinks}
     </ul>
+    // </div>
   );
 }
 

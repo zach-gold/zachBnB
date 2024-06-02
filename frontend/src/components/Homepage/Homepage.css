@@ -1,0 +1,84 @@
+.spotContainer {
+  margin-top: 10px;
+  width: auto;
+  display: flex;
+  /* flex-direction: row; */
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-around;
+}
+
+.tile {
+  width: 400px;
+  height: 400px;
+  text-decoration: none;
+  position: relative;
+}
+
+.spotInfo:hover {
+  visibility: visible;
+}
+
+.tileThumbnail {
+  width: 400px;
+  height: 250px;
+  border-radius: 3%;
+  box-shadow: 2px 2px 5px black;
+}
+
+.tileThumbnail:hover {
+  box-shadow: 3px 3px 10px #002855;
+}
+
+.spotInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  text-wrap: wrap;
+}
+
+.spotName {
+  background-color: #002855;
+  visibility: hidden;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  width: 120px;
+  /* bottom: -105px; */
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tile:hover .spotName {
+  text-decoration: none;
+  visibility: visible;
+}
+
+.spotLocation {
+  text-decoration: none;
+  font-size: 20px;
+  margin-left: 10px;
+  /* order: -1; */
+}
+
+.price {
+  margin-left: 10px;
+}
+
+.stars {
+  margin-left: 10px;
+  position: absolute;
+  right: 0%;
+  margin-top: 4px;
+}
+
+.star {
+  width: 25px;
+  height: 25px;
+  /* order: 3; */
+}
