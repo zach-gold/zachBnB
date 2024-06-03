@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import { createSpotReview } from "../../store/reviews";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
+//import { useModal } from "../../context/Modal";
 import "./modal.css";
-const MakeReview = () => {
+const MakeReview = (props) => {
   let dispatch = useDispatch();
   let { spotId } = useParams();
   let reviews = useSelector((state) => state.reviews);
@@ -18,6 +19,10 @@ const MakeReview = () => {
   const [errors, setErrors] = useState([]);
   const [filled, setFilled] = useState(0);
   const ratings = [1, 2, 3, 4, 5];
+  //const [showModal, setShowModal] = useState(false);
+
+  // Function to open and close modal
+
 
   useEffect(() => {
     let arr = [];
@@ -47,6 +52,8 @@ const MakeReview = () => {
 
     dispatch(createSpotReview(newReview, spotId));
     resetStates();
+    props.closeModal();
+
   };
 
   let existing = reviews?.find((review) => review.userId === sessionUser);

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { spotDetails } from "../../store/spots";
 import { useParams } from "react-router-dom";
-//import { FaStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import { spotReviews } from "../../store/reviews";
 import MakeReview from "../Reviews/MakeReview";
 import "../../index.css";
@@ -12,22 +12,57 @@ import "./modal.css"
 function DetailsPage() {
   let { spotId } = useParams();
   let dispatch = useDispatch();
+   // State to control modal visibility
+   const [showModal, setShowModal] = useState(false);
+  const [trigger, setTrigger] = useState(false);
   useEffect(() => {
     dispatch(spotDetails(spotId));
     dispatch(spotReviews(spotId));
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, trigger]);
 
   let spot = useSelector((state) => state.spots);
   let selected = spot[spotId];
   let reviews = useSelector((state) => state.reviews);
   let rv = Object.values(reviews);
+  let sum = 0;
+  rv.forEach((review) => {
+    sum += review.stars;
+  });
+  //   console.log(sum);
+  let average = (sum / rv.length).toFixed(1);
+  //   console.log(average);
+  let stringAvg = average.toString();
   let sessionUser = useSelector((state) => state.session.user);
+  let existing = rv.find((review) => review.userId === sessionUser?.id);
 
-  // State to control modal visibility
-  const [showModal, setShowModal] = useState(false);
+
 
   // Function to open and close modal
-  const toggleModal = () => setShowModal(!showModal);
+  const toggleModal = () => {
+    setShowModal(!showModal)
+    setTrigger(!trigger)
+  };
+
+  const closeModal = () => {
+    setTrigger(!trigger)
+    setShowModal(false);
+    dispatch(spotReviews(spotId));
+  };
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   return (
     <div>
@@ -67,21 +102,63 @@ function DetailsPage() {
               <div className="description">
                 <h3>{`Hosted by ${selected.Owner?.firstName} ${selected.Owner?.lastName}`}</h3>
                 <p>{selected.description}</p>
-                <span className="spotPrice">{`$${selected.price} / night`}</span>
+                <span className="spotPrice">{`$${selected.price} / night`}</span> <br />
                 <span className="spotStars">
-                  {/* Review button */}
-                  {sessionUser && sessionUser.id !== selected.ownerId && (
-                    <button onClick={toggleModal}>
+
+                  <div className="reviewBoard">
+                  <div
+                      className="reviewHeader"
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "5px",
+                      }}
+                    >
+                      <h3>
+                      {/* {rv.length > 0 ? ( */}
+                          <FaStar style={{ color: "#EAAA00" }} />
+                        {/* ) : null} */}
+                        {rv.length > 0
+                          ? average % 1 !== 0
+                            ? `${average} stars · `
+                            : `${stringAvg} stars · `
+                          : ""}
+                      </h3>
+
+                      <h3>
+                      {rv.length === 0
+                          ? "New"
+                          : rv.length > 1
+                          ? `${rv.length} reviews`
+                          : `1 review`}
+                        {/* {rv.length > 1
+                          ? ` ${rv.length} reviews`
+                          : ` ${rv.length} review`} */}
+                      </h3>
+                    </div>
+                    {/* Review button */}
+                  {sessionUser && sessionUser.id !== selected.ownerId && !existing && (
+                    <button onClick={toggleModal} style={{fontWeight:"550", border:"1px solid grey",borderRadius:"10%"}}>
                       {rv.length > 0
                         ? "Post Your Review!"
                         : "Be the first to leave a review!"}
                     </button>
                   )}
-                  <div className="reviewBoard">
-                    <h3>Reviews</h3>
-                    <ul>
-                      {rv.map((review) => (
-                        <li key={review.id}>{review.review}</li>
+                    <ul style={{ listStyle: "none" }}>
+                      {rv?.reverse().map((review) => (
+                        <li key={review.id}>
+                          <h4>
+                            {review?.User?.firstName +
+                              `, ${
+                                months[review.createdAt?.slice(5, 6) - 1]
+                              } ${review.createdAt?.slice(7,8)}`}
+                          </h4>
+                          <p>
+                            <FaStar style={{ color: "#EAAA00" }}/>
+                            <b> {review.stars} stars</b>
+                          </p>
+                          <p>{review.review}</p>
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -93,8 +170,8 @@ function DetailsPage() {
       )}
 
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
+        <div className="modal" onClick={toggleModal}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <span
               className="close"
               style={{ cursor: "pointer" }}
@@ -102,7 +179,7 @@ function DetailsPage() {
             >
               X
             </span>
-            <MakeReview className="reviewModal" />
+            <MakeReview className="reviewModal" closeModal ={closeModal} />
           </div>
         </div>
       )}

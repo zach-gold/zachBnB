@@ -16,7 +16,7 @@ function Navigation({ isLoaded }) {
         flexDirection: "row",
         justifyContent: "space-between",
         alignContent: "center",
-        borderBottom: "2px solid black",
+        borderBottom: "1px solid gray",
         paddingLeft: "30px",
         paddingRight: "30px",
       }}

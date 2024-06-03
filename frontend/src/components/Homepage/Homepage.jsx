@@ -36,7 +36,7 @@ const Homepage = () => {
 
                   <div className="price">{`$${spot.price}`}/ night</div>
                   <div className="stars">
-                    <FaStar className="star" />
+                    <FaStar className="star" style={{ color: "#EAAA00" }} />
                     <span className="howMany" style={{ fontWeight: "650" }}>
                       {spot.avgRating !== 0 ? `${spot.avgRating} stars` : "New"}
                     </span>

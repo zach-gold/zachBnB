@@ -4,11 +4,13 @@ import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import {  useNavigate } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const navigate = useNavigate();
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
@@ -35,6 +37,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    navigate("/");
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -51,11 +54,12 @@ function ProfileButton({ user }) {
           width: "60px",
           height: "40px",
           backgroundColor: "white",
+          cursor:"pointer"
         }}
       >
         <span
           className="far fa-address-card"
-          style={{ position: "relative", fontSize: "36px" }}
+          style={{ position: "relative", fontSize: "36px",cursor:"pointer" }}
         />
       </button>
       <br />
