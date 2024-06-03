@@ -7,6 +7,7 @@ import { spotReviews } from "../../store/reviews";
 import MakeReview from "../Reviews/MakeReview";
 import "../../index.css";
 import "./Spot.css";
+import "./modal.css"
 
 function DetailsPage() {
   let { spotId } = useParams();
@@ -101,7 +102,7 @@ function DetailsPage() {
             >
               X
             </span>
-            <MakeReview />
+            <MakeReview className="reviewModal" />
           </div>
         </div>
       )}
