@@ -1,5 +1,5 @@
 .spotContainer {
-  margin-top: 10px;
+  margin-top: 40px;
   width: auto;
   display: flex;
   /* flex-direction: row; */
@@ -7,6 +7,14 @@
   gap: 10px;
   justify-content: space-around;
 }
+
+.spotLink {
+  text-decoration: none;
+}
+
+/* .spotLink:hover {
+  text-decoration: underline;
+} */
 
 .tile {
   width: 400px;

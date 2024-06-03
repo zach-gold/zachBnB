@@ -6,8 +6,7 @@ import { useParams } from "react-router-dom";
 import { spotReviews } from "../../store/reviews";
 import MakeReview from "../Reviews/MakeReview";
 import "../../index.css";
-import "./Spot.css"
-
+import "./Spot.css";
 
 function DetailsPage() {
   let { spotId } = useParams();
@@ -36,7 +35,7 @@ function DetailsPage() {
           <header>
             <h2>{selected.name}</h2>
             <h3>
-              {selected.city}, {selected.state} {selected.country}
+              {selected.city}, {selected.state}, {selected.country}
             </h3>
           </header>
           <div className="spotDetailsImages">
@@ -95,7 +94,11 @@ function DetailsPage() {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" style={{cursor: "pointer"}} onClick={toggleModal}>
+            <span
+              className="close"
+              style={{ cursor: "pointer" }}
+              onClick={toggleModal}
+            >
               X
             </span>
             <MakeReview />

@@ -5,7 +5,6 @@ import { getAll } from "../../store/spots";
 import "./Homepage.css";
 import { FaStar } from "react-icons/fa";
 
-
 const Homepage = () => {
   const dispatch = useDispatch();
 
@@ -22,20 +21,25 @@ const Homepage = () => {
         {spots &&
           spots.map((spot) => (
             <div className="tile" key={spot.id}>
-              <NavLink to={`/spots/${spot.id}`}>
+              <NavLink className="spotLink" to={`/spots/${spot.id}`}>
                 <img
                   src={spot.previewImage}
                   alt={`Preview image for ${spot.name}`}
                   className="tileThumbnail"
                 />
                 <div className="spotInfo">
-                <span className="spotName">{`${spot.name}`}</span>
-                  <div className="spotLocation">{`${spot.city}, ${spot.state}`}</div>
+                  <span className="spotName">{`${spot.name}`}</span>
+                  <div
+                    className="spotLocation"
+                    style={{ fontWeight: "550" }}
+                  >{`${spot.city}, ${spot.state}`}</div>
 
                   <div className="price">{`$${spot.price}`}/ night</div>
                   <div className="stars">
-                  <FaStar className="star"/>
-                  {spot.avgRating !== 0 ? `${spot.avgRating} stars` : "New"}
+                    <FaStar className="star" />
+                    <span className="howMany" style={{ fontWeight: "650" }}>
+                      {spot.avgRating !== 0 ? `${spot.avgRating} stars` : "New"}
+                    </span>
                   </div>
                 </div>
               </NavLink>

@@ -15,8 +15,8 @@ const formatDate = (date) => {
   const month = formattedDate.getMonth() + 1;
   const day = formattedDate.getDate();
   const hours = formattedDate.getHours();
-  const minutes = ('0'+formattedDate.getMinutes()).slice(-2);
-  const sec = ('0'+formattedDate.getSeconds()).slice(-2);
+  const minutes = ("0" + formattedDate.getMinutes()).slice(-2);
+  const sec = ("0" + formattedDate.getSeconds()).slice(-2);
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${sec}`;
 };

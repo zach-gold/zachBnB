@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
-import * as sessionActions from '../../store/session';
-import './SignupForm.css';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
+import * as sessionActions from "../../store/session";
+import "./SignupForm.css";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function SignupFormModal() {
           username,
           firstName,
           lastName,
-          password
+          password,
         })
       )
         .then(closeModal)
@@ -37,16 +37,24 @@ function SignupFormModal() {
         });
     }
     return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
+      confirmPassword:
+        "Confirm Password field must be the same as the Password field",
     });
   };
 
   return (
-    <>
+    <div className="signUpBox" style={{ display: "flex" }}>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <label>
           Email
+          <br />
           <input
             type="text"
             value={email}
@@ -57,6 +65,7 @@ function SignupFormModal() {
         {errors.email && <p>{errors.email}</p>}
         <label>
           Username
+          <br />
           <input
             type="text"
             value={username}
@@ -67,6 +76,7 @@ function SignupFormModal() {
         {errors.username && <p>{errors.username}</p>}
         <label>
           First Name
+          <br />
           <input
             type="text"
             value={firstName}
@@ -77,6 +87,7 @@ function SignupFormModal() {
         {errors.firstName && <p>{errors.firstName}</p>}
         <label>
           Last Name
+          <br />
           <input
             type="text"
             value={lastName}
@@ -87,6 +98,7 @@ function SignupFormModal() {
         {errors.lastName && <p>{errors.lastName}</p>}
         <label>
           Password
+          <br />
           <input
             type="password"
             value={password}
@@ -97,6 +109,7 @@ function SignupFormModal() {
         {errors.password && <p>{errors.password}</p>}
         <label>
           Confirm Password
+          <br />
           <input
             type="password"
             value={confirmPassword}
@@ -107,7 +120,7 @@ function SignupFormModal() {
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

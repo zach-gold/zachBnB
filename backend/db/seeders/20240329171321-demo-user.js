@@ -15,7 +15,7 @@ module.exports = {
 
     // This for loop decides how many datapoints to create.
     // If you want to change the amount, just change the number in the for loop!
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i < 15; i++) {
       // The keys in this user object are set equal to the fake information
       let newUser = {
         firstName: faker.person.firstName(),
@@ -32,7 +32,7 @@ module.exports = {
     let demoUser = {
       firstName: "Demo",
       lastName: "Lition",
-      email: "demo-lition@zachbnb.onrender.com",
+      email: "demo@user.io",
       username: "Demo-lition",
       hashedPassword: bcrypt.hashSync("password"),
     };

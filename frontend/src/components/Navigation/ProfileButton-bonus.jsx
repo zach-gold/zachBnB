@@ -41,38 +41,54 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <i className="fas fa-user-circle" />
+      <button
+        onClick={toggleMenu}
+        style={{
+          position: "relative",
+          left: "-15px",
+          borderRadius: "40%",
+          border: "none",
+          width: "60px",
+          height: "40px",
+          backgroundColor: "white",
+        }}
+      >
+        <span
+          className="far fa-address-card"
+          style={{ position: "relative", fontSize: "36px" }}
+        />
       </button>
       <br />
-      <ul className={ulClassName} ref={ulRef}>
+      <div className={ulClassName} ref={ulRef} style={{ paddingRight: "18px" }}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>
+            {/* <li>{user.username}</li> */}
+            <span>
               Hello, {user.firstName} {user.lastName}
-            </li>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
+            </span>
+            <br />
+            {/* <li>{user.username}</li> */}
+            <span>{user.email}</span>
+            <br />
+            <span>
               <button onClick={logout}>Log Out</button>
-            </li>
+            </span>
           </>
         ) : (
-          <div className="profilemenu">
-            <OpenModalMenuItem
-              itemText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
+          <div className="profilemenu" style={{ alignItems: "left" }}>
             <OpenModalMenuItem
               itemText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
+            <OpenModalMenuItem
+              itemText="Log In"
+              onItemClick={closeMenu}
+              modalComponent={<LoginFormModal />}
+            />
           </div>
         )}
-      </ul>
+      </div>
     </>
   );
 }

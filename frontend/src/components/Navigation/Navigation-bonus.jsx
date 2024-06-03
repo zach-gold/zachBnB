@@ -1,12 +1,13 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton-bonus';
-import './Navigation.css';
-import homeIcon from '../../../public/assets/home-icon.png'
+import { useNavigate } from "react-router-dom";
+//import {NavLink} from "react-router-dom"
+import { useSelector } from "react-redux";
+import ProfileButton from "./ProfileButton-bonus";
+import "./Navigation.css";
+import homeIcon from "../../../public/assets/home-icon.png";
 
 function Navigation({ isLoaded }) {
   const navigate = useNavigate();
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
 
   return (
     <div
@@ -15,6 +16,9 @@ function Navigation({ isLoaded }) {
         flexDirection: "row",
         justifyContent: "space-between",
         alignContent: "center",
+        borderBottom: "2px solid black",
+        paddingLeft: "30px",
+        paddingRight: "30px",
       }}
     >
       <div
@@ -35,33 +39,39 @@ function Navigation({ isLoaded }) {
             height: "auto",
             borderRadius: "50%",
             overflow: "hidden",
+            paddingBottom: "8px",
           }}
         />
       </div>
 
-      <ul
+      <div
         style={{
-          borderRadius: "10px ",
+          borderRadius: "25px ",
           border: "1px solid gray",
-          paddingRight: "40px",
-          paddingLeft: "35px",
+          marginTop: "25px",
+          paddingRight: "5px",
+          paddingLeft: "25px",
           width: "50px",
-          height: "70px",
+          height: "45px",
           boxShadow: "2px 2px 5px #002855",
           backgroundColor: "white",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignContent: "center",
         }}
       >
-        <li>
+        {/* <li>
           <NavLink to="/" style={{ fontSize: "20px" }}>
             Home
           </NavLink>
-        </li>
+        </li> */}
         {isLoaded && (
-          <li>
+          <span>
             <ProfileButton user={sessionUser} />
-          </li>
+          </span>
         )}
-      </ul>
+      </div>
     </div>
   );
 }

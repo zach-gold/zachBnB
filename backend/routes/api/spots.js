@@ -17,12 +17,11 @@ const formatDate = (date) => {
   const month = formattedDate.getMonth() + 1;
   const day = formattedDate.getDate();
   const hours = formattedDate.getHours();
-  const minutes = ('0'+formattedDate.getMinutes()).slice(-2);
-  const sec = ('0'+formattedDate.getSeconds()).slice(-2);
+  const minutes = ("0" + formattedDate.getMinutes()).slice(-2);
+  const sec = ("0" + formattedDate.getSeconds()).slice(-2);
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${sec}`;
 };
-
 
 const formatStartEndDate = (date) => {
   const formattedDate = new Date(date);
@@ -227,8 +226,8 @@ router.get("/", async (req, res) => {
       errors: {
         page: "Page must be greater than or equal to 1",
         size: "Size must be greater than or equal to 1",
-      }
-    })
+      },
+    });
   }
 
   if (page > 10 || size > 20) {
@@ -237,17 +236,15 @@ router.get("/", async (req, res) => {
       errors: {
         page: "Page must be less than or equal to 10",
         size: "Size must be less thank or equal to 20",
-
-      }
-    })
+      },
+    });
   }
-
 
   let pagination = {
     limit: size,
     offset: size * (page - 1),
   };
-  const spots = await Spot.findAll({...pagination});
+  const spots = await Spot.findAll({ ...pagination });
 
   //refactor later for DRYness
   for (let spot of spots) {
@@ -474,7 +471,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
         startDate: formatStartEndDate(booking.startDate),
         endDate: formatStartEndDate(booking.endDate),
         createdAt: formatDate(booking.createdAt),
-      updatedAt: formatDate(booking.updatedAt),
+        updatedAt: formatDate(booking.updatedAt),
       })),
     };
     res.status(200).json(response);
@@ -539,7 +536,7 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
     review: newReview.review,
     stars: newReview.stars,
     createdAt: formatDate(newReview.createdAt),
-      updatedAt: formatDate(newReview.updatedAt),
+    updatedAt: formatDate(newReview.updatedAt),
   });
 });
 
@@ -573,7 +570,7 @@ router.get("/:spotId/reviews", async (req, res) => {
     review: review.review,
     stars: review.stars,
     createdAt: formatDate(review.createdAt),
-      updatedAt: formatDate(review.updatedAt),
+    updatedAt: formatDate(review.updatedAt),
     User: {
       id: review.User.id,
       firstName: review.User.firstName,
@@ -667,8 +664,8 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
       spotId: +newBooking.spotId,
       userId: newBooking.userId,
       startDate: formatStartEndDate(newBooking.startDate),
-        endDate: formatStartEndDate(newBooking.endDate),
-        createdAt: formatDate(newBooking.createdAt),
+      endDate: formatStartEndDate(newBooking.endDate),
+      createdAt: formatDate(newBooking.createdAt),
       updatedAt: formatDate(newBooking.updatedAt),
     };
 
