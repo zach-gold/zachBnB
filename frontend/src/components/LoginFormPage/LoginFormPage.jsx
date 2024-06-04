@@ -1,9 +1,9 @@
 //import { useEffect } from 'react';
-import { useState } from 'react';
-import * as sessionActions from '../../store/session';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import './LoginForm.css';
+import { useState } from "react";
+import * as sessionActions from "../../store/session";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import "./LoginForm.css";
 
 function LoginFormPage() {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function LoginFormPage() {
       async (res) => {
         const data = await res.json();
         if (data?.errors) setErrors(data.errors);
-      }
+      },
     );
   };
 

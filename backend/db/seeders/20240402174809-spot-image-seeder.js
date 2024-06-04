@@ -19,7 +19,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    for (let i = 1; i < 15; i++) {
+    for (let i = 1; i < 18; i++) {
       for (let j = 0; j < 6; j++) {
         images.push({
           spotId: i,
@@ -99,7 +99,7 @@ module.exports = {
       // ],
       {
         validate: true,
-      }
+      },
     );
   },
 

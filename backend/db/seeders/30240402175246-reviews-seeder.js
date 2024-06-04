@@ -40,7 +40,7 @@ module.exports = {
       ],
       {
         validate: true,
-      }
+      },
     );
   },
 

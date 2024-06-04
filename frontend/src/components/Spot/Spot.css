@@ -21,3 +21,12 @@
   width: 100%; /* Make sure all small images take full width of their container */
   height: 100%; /* Maintain aspect ratio */
 }
+
+.tile {
+  text-decoration: none;
+  color: black;
+}
+.tile:visited {
+  text-decoration: none;
+  color: black;
+}

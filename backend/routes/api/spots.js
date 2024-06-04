@@ -334,7 +334,7 @@ router.post("/", requireAuth, spotValidator, async (req, res) => {
     createdAt: formatDate(spot.createdAt),
     updatedAt: formatDate(spot.updatedAt),
   };
-  return res.status(200).json(resSpot);
+  return res.status(201).json(resSpot);
 });
 
 router.put("/:spotId", requireAuth, spotValidator, async (req, res) => {

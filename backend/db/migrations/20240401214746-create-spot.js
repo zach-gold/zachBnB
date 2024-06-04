@@ -45,12 +45,12 @@ module.exports = {
         lat: {
           type: Sequelize.NUMERIC,
           allowNull: false,
-          unique: true,
+          //unique: true,
         },
         lng: {
           type: Sequelize.NUMERIC,
           allowNull: false,
-          unique: true,
+          //unique: true,
         },
         name: {
           type: Sequelize.STRING,
@@ -75,7 +75,7 @@ module.exports = {
           defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
       },
-      options
+      options,
     );
   },
   async down(queryInterface, Sequelize) {

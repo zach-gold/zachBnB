@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-//import {NavLink} from "react-router-dom"
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton-bonus";
 import "./Navigation.css";
@@ -43,34 +43,51 @@ function Navigation({ isLoaded }) {
           }}
         />
       </div>
-
       <div
         style={{
-          borderRadius: "25px ",
-          border: "1px solid gray",
-          marginTop: "25px",
-          paddingRight: "5px",
-          paddingLeft: "25px",
-          width: "50px",
-          height: "45px",
-          boxShadow: "2px 2px 5px #002855",
-          backgroundColor: "white",
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
           justifyContent: "center",
           alignContent: "center",
         }}
       >
-        {/* <li>
-          <NavLink to="/" style={{ fontSize: "20px" }}>
-            Home
+        {sessionUser && (
+          <NavLink
+            to="spots/new"
+            style={{
+              marginTop: "40px",
+              paddingRight: "8px",
+              fontWeight: "550",
+              textDecoration: "none",
+              color: "lightblue",
+            }}
+          >
+            Create a New Spot
           </NavLink>
-        </li> */}
-        {isLoaded && (
-          <span>
-            <ProfileButton user={sessionUser} />
-          </span>
         )}
+        <div
+          style={{
+            borderRadius: "25px ",
+            border: "1px solid gray",
+            marginTop: "25px",
+            paddingRight: "5px",
+            paddingLeft: "25px",
+            width: "50px",
+            height: "45px",
+            boxShadow: "2px 2px 5px #002855",
+            backgroundColor: "white",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignContent: "center",
+          }}
+        >
+          {isLoaded && (
+            <span>
+              <ProfileButton user={sessionUser} />
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

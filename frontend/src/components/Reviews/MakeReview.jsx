@@ -23,7 +23,6 @@ const MakeReview = (props) => {
 
   // Function to open and close modal
 
-
   useEffect(() => {
     let arr = [];
     if (review.length < 10) {
@@ -53,7 +52,6 @@ const MakeReview = (props) => {
     dispatch(createSpotReview(newReview, spotId));
     resetStates();
     props.closeModal();
-
   };
 
   let existing = reviews?.find((review) => review.userId === sessionUser);

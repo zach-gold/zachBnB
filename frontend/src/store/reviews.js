@@ -55,7 +55,7 @@ export default function reviewsReducer(state = {}, action) {
     case GET: {
       let newState = {};
       action.reviews.Reviews.forEach(
-        (review) => (newState[review.id] = review)
+        (review) => (newState[review.id] = review),
       );
       return newState;
     }

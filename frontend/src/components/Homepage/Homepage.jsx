@@ -31,14 +31,16 @@ const Homepage = () => {
                   <span className="spotName">{`${spot.name}`}</span>
                   <div
                     className="spotLocation"
-                    style={{ fontSize: "18px",fontWeight: "550" }}
+                    style={{ fontSize: "18px", fontWeight: "550" }}
                   >{`${spot.city}, ${spot.state}`}</div>
 
                   <div className="price">{`$${spot.price}`}/ night</div>
                   <div className="stars">
                     <FaStar className="star" style={{ color: "#EAAA00" }} />
                     <span className="howMany" style={{ fontWeight: "650" }}>
-                      {spot.avgRating !== 0 ? `${spot.avgRating} stars` : "New"}
+                      {spot?.avgRating !== 0
+                        ? spot?.avgRating?.toFixed(1) + " Stars"
+                        : "New"}
                     </span>
                   </div>
                 </div>

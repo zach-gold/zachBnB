@@ -4,7 +4,7 @@ import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -54,26 +54,41 @@ function ProfileButton({ user }) {
           width: "60px",
           height: "40px",
           backgroundColor: "white",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
       >
         <span
           className="far fa-address-card"
-          style={{ position: "relative", fontSize: "36px",cursor:"pointer" }}
+          style={{ position: "relative", fontSize: "36px", cursor: "pointer" }}
         />
       </button>
       <br />
-      <div className={ulClassName} ref={ulRef} style={{ paddingRight: "18px" }}>
+      <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             {/* <li>{user.username}</li> */}
-            <span>
-              Hello, {user.firstName} {user.lastName}
-            </span>
-            <br />
-            {/* <li>{user.username}</li> */}
-            <span>{user.email}</span>
-            <br />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyItems: "center",
+              }}
+            >
+              <span>
+                Hello, {user.firstName}
+              </span>
+              <br />
+              {/* <li>{user.username}</li> */}
+              <span>{user.email}</span>
+              <br />
+            </div>
+            <div style={{ width: "148px", borderBottom: "1px solid black", borderTop: "1px solid black" }}>
+              <NavLink to="/manage" style={{ paddingLeft: "18px" }}>
+                Manage Spots
+              </NavLink>
+              <br />
+            </div>
             <span>
               <button onClick={logout}>Log Out</button>
             </span>

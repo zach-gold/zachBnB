@@ -33,7 +33,7 @@ module.exports = {
           url: faker.image.url(),
         },
       ],
-      { validate: true }
+      { validate: true },
     );
   },
 

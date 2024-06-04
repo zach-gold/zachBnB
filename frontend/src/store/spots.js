@@ -47,8 +47,8 @@ export const deleteUserSpot = (spotId) => async (dispatch) => {
   res.json("Successfully Deleted");
 };
 
-export const updateCurrent = (spot, spotId) => async (dispatch) => {
-  let res = await csrfFetch(`/apit/spots/${spotId}`, {
+export const updateCurrentSpot = (spot, spotId) => async (dispatch) => {
+  let res = await csrfFetch(`/api/spots/${spotId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(spot),
@@ -70,18 +70,17 @@ export const createASpot = (spot, images) => async (dispatch) => {
   }
   if (res.ok) {
     let newSpot = await res.json();
-    let newImgs = imgURLs.forEach((url) => {
-      url &&
-        csrfFetch(`/api/spots/${newSpot.id}/images`, {
-          method: "POST",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({
-            url: url,
-            preview: true,
-          }),
-        });
+    imgURLs.forEach((image) => {
+      csrfFetch(`/api/spots/${newSpot.id}/images`, {
+        method: "POST",
+        // headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          url: image.url,
+          preview: true,
+        }),
+      });
     });
-    await dispatch(createSpot(newSpot, newImgs));
+    await dispatch(createSpot(newSpot));
     return newSpot;
   }
 };

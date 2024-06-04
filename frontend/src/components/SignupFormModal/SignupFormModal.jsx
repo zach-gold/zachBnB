@@ -28,7 +28,7 @@ function SignupFormModal() {
           firstName,
           lastName,
           password,
-        })
+        }),
       )
         .then(closeModal)
         .catch(async (res) => {
@@ -135,7 +135,9 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit" disabled={block}>Sign Up</button>
+        <button type="submit" disabled={block}>
+          Sign Up
+        </button>
       </form>
     </div>
   );

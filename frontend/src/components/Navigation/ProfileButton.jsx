@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
+import { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import * as sessionActions from "../../store/session";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -21,9 +21,9 @@ function ProfileButton({ user }) {
       }
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener("click", closeMenu);
 
-    return () => document.removeEventListener('click', closeMenu);
+    return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
   const logout = (e) => {
@@ -39,7 +39,7 @@ function ProfileButton({ user }) {
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
-      <li>
+        <li>
           Hello, {user.firstName} {user.lastName}
         </li>
         <li>{user.userName}</li>

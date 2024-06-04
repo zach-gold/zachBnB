@@ -54,7 +54,7 @@ function LoginFormModal() {
         }}
       />
       {errorMessage && (
-        <p style={{ backgroundColor: "#000000b3", color: "red" }}>
+        <p style={{ color: "red" }}>
           {errorMessage}
         </p>
       )}
