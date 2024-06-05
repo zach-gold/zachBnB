@@ -16,8 +16,8 @@ function UpdateSpot() {
   const [city, setCity] = useState(spot?.city);
   const [state, setState] = useState(spot?.state);
   const [country, setCountry] = useState(spot?.country);
-  const [lat, setLat] = useState(spot?.lat);
-  const [lng, setLng] = useState(spot?.lng);
+  const [lat] = useState(spot?.lat);
+  const [lng] = useState(spot?.lng);
   const [description, setDescription] = useState(spot?.description);
   const [name, setName] = useState(spot?.name);
   // const [description, setDescription] = useState()
@@ -26,7 +26,7 @@ function UpdateSpot() {
   const [errors, setErrors] = useState([]);
   useEffect(() => {
     dispatch(spotDetails(spotId));
-  }, []);
+  }, [dispatch, spotId]);
 
   useEffect(() => {
     let errorArray = [];
@@ -131,7 +131,7 @@ function UpdateSpot() {
                   color: "red",
                 }}
               >
-                {errors.filter((error) => error.includes("address"))}
+                {errors.filter((error) => error.includes("Address"))}
               </p>
               <input
                 type="text"
@@ -183,7 +183,7 @@ function UpdateSpot() {
             </label>
           </div>
           <br />
-          <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+          {/* <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
             <label htmlFor="latitude">
               Latitude
               <p
@@ -222,7 +222,7 @@ function UpdateSpot() {
                 style={{ width: "232px" }}
               />
             </label>
-          </div>
+          </div> */}
         </section>
         <section
           id="descriptionContainer"
@@ -236,7 +236,7 @@ function UpdateSpot() {
           <textarea
             name="description"
             id="descriptionInput"
-            cols="70"
+            cols="67"
             rows="5"
             placeholder="Please write at least 30 characters"
             value={description}
@@ -378,7 +378,19 @@ function UpdateSpot() {
             </label> */}
         {/* </div> */}
         {/* </section> */}
-        <button>Update your Spot</button>
+        <button
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // width: "500px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "10px",
+          }}
+        >
+          Update your Spot
+        </button>
       </form>
     </div>
   );

@@ -9,14 +9,11 @@ function ManageSpots() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-
+  const [deleted, setDeleted] = useState(false);
   const spots = useSelector((state) => state.spots);
   const spotsArray = Object.values(spots);
 
   const toggleModal = () => setShowModal(!showModal);
-  useEffect(() => {
-    dispatch(userSpots());
-  }, [dispatch]);
 
   //   const closeModal = () => {
   //     setShowModal(false);
@@ -25,12 +22,15 @@ function ManageSpots() {
     try {
       await dispatch(deleteUserSpot(spotId)); // Dispatch deleteUserSpot thunk with spotId
       toggleModal(); // Close the modal after successful deletion
-      window.location.reload();
+      setDeleted(!deleted);
     } catch (error) {
       console.error("Error deleting spot:", error);
       // Handle error or display error message
     }
   };
+  useEffect(() => {
+    dispatch(userSpots());
+  }, [dispatch, deleted]);
   return (
     <>
       <h1>Manage Spots</h1>
@@ -75,8 +75,8 @@ function ManageSpots() {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginLeft: "290px",
+                  // justifyContent: "space-around",
+                  // marginLeft: "290px",
                 }}
               >
                 <button
@@ -105,8 +105,15 @@ function ManageSpots() {
                     <div>
                       <button
                         onClick={() => handleDelete(spot.id)}
+                        style={{ backgroundColor: "red" }}
                       >{`Yes (Delete Spot)`}</button>
-                      <button onClick={toggleModal}>{`No (Keep Spot)`}</button>
+                      <button
+                        onClick={toggleModal}
+                        style={{
+                          backgroundColor: "grey",
+                          color: "White",
+                        }}
+                      >{`No (Keep Spot)`}</button>
                       {/* <MakeReview closeModal={closeModal} /> */}
                     </div>
                   </div>

@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { spotDetails } from "../../store/spots";
 import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
-import { spotReviews } from "../../store/reviews";
+import { deleteReviewThunk, spotReviews } from "../../store/reviews";
 import MakeReview from "../Reviews/MakeReview";
 import "../../index.css";
 import "./Spot.css";
 import "./modal.css";
+import noImg from "./noImg.jpg";
 
 function DetailsPage() {
   let { spotId } = useParams();
@@ -24,6 +25,20 @@ function DetailsPage() {
   let selected = spot[spotId];
   let reviews = useSelector((state) => state.reviews);
   let rv = Object.values(reviews);
+  //console.log("Reviews: " + rv);
+  //let reversedReviews = rv.reverse();
+  //console.log("reversedReviews: " + reversedReviews);
+  const handleDelete = async () => {
+    const reviewToDelete = rv.find(
+      (review) => review.userId === sessionUser.id,
+    );
+    if (reviewToDelete) {
+      await dispatch(deleteReviewThunk(reviewToDelete.id));
+      toggleDeleteModal();
+    }
+    //console.log(reviewToDelete);
+  };
+  //console.log(reversedReviews);
   let sum = 0;
   rv.forEach((review) => {
     sum += review.stars;
@@ -35,11 +50,15 @@ function DetailsPage() {
   let sessionUser = useSelector((state) => state.session.user);
   let existing = rv.find((review) => review.userId === sessionUser?.id);
 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   // Function to open and close modal
   const toggleModal = () => {
     setShowModal(!showModal);
     setTrigger(!trigger);
   };
+
+  const toggleDeleteModal = () => setShowDeleteModal(!showDeleteModal);
 
   const closeModal = () => {
     setTrigger(!trigger);
@@ -65,7 +84,10 @@ function DetailsPage() {
   return (
     <div>
       {selected && (
-        <div className="spotPage" style={{width:"1000px", marginRight:"auto",marginLeft:"auto"}}>
+        <div
+          className="spotPage"
+          style={{ width: "1000px", marginRight: "auto", marginLeft: "auto" }}
+        >
           <header>
             <h2>{selected.name}</h2>
             <h3>
@@ -80,19 +102,19 @@ function DetailsPage() {
             />
             <div className="smallImagesContainer">
               <img
-                src={selected.SpotImages?.[1]?.url}
+                src={selected.SpotImages?.[1]?.url || noImg}
                 alt="small spot picture one"
               />
               <img
-                src={selected.SpotImages?.[2]?.url}
+                src={selected.SpotImages?.[2]?.url || noImg}
                 alt="small spot picture 2"
               />
               <img
-                src={selected.SpotImages?.[3]?.url}
+                src={selected.SpotImages?.[3]?.url || noImg}
                 alt="small spot picture 3"
               />
               <img
-                src={selected.SpotImages?.[4]?.url}
+                src={selected.SpotImages?.[4]?.url || noImg}
                 alt="small spot picture 4"
               />
             </div>
@@ -145,7 +167,7 @@ function DetailsPage() {
                             border: "1px solid grey",
                             borderRadius: "10%",
                             backgroundColor: "grey",
-                            color:"white"
+                            color: "white",
                           }}
                         >
                           {rv.length > 0
@@ -154,7 +176,7 @@ function DetailsPage() {
                         </button>
                       )}
                     <ul style={{ listStyle: "none" }}>
-                      {rv?.reverse().map((review) => (
+                      {rv.map((review) => (
                         <li key={review.id}>
                           <h4>
                             {review?.User?.firstName +
@@ -167,55 +189,93 @@ function DetailsPage() {
                             <b> {review.stars} Stars</b>
                           </p>
                           <p>{review.review}</p>
+                          {sessionUser && sessionUser.id === review.userId && (
+                            <button onClick={toggleDeleteModal}>Delete</button>
+                          )}
+                          {showDeleteModal && (
+                            <div className="modal" onClick={toggleDeleteModal}>
+                              <div
+                                className="modal-content"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <span
+                                  className="close"
+                                  style={{ cursor: "pointer" }}
+                                  onClick={toggleDeleteModal}
+                                >
+                                  X
+                                </span>
+                                <h2>Confirm Delete</h2>
+                                <p>
+                                  Are you sure you want to delete this review?
+                                </p>
+                                <button
+                                  style={{
+                                    backgroundColor: "grey",
+                                    color: "White",
+                                  }}
+                                  onClick={toggleDeleteModal}
+                                >{`No (Keep Review)`}</button>
+                                <button
+                                  style={{ backgroundColor: "red" }}
+                                  onClick={() => {
+                                    handleDelete(); // console.log(review.id);
+                                  }}
+                                >
+                                  {`Yes (Delete Review)`}
+                                </button>
+                              </div>
+                            </div>
+                          )}
                         </li>
                       ))}
                     </ul>
                   </div>
                 </span>
               </div>
-
             </div>
             <div className="reserveBox">
-            <div
-            style={{
-              position: "sticky",
-              right: "12px",
-              width: "480px",
-              height: "150px",
-              border: "3px solid rgb(0, 40, 85)",
-              borderRadius: "5%",
-            }}
-          >
-            <h3 style={{ marginLeft: "20px" }}>${selected.price} per night</h3>
-            <h4 style={{ marginLeft: "20px" }}>
-              <FaStar />
-              {rv.length > 0 ? `${average} Stars · ` : null}
-              {rv.length === 0
-                ? "New"
-                : rv.length > 1
-                ? `${rv.length} reviews`
-                : `1 review`}
-            </h4>
-            {sessionUser && sessionUser?.id !== selected.ownerId && (
-              <button
-                onClick={() => window.alert("Feature coming soon...")}
+              <div
                 style={{
-                  marginLeft: "10px",
-                  marginRight: "15px",
-                  cursor: "pointer",
-                  width: "460px",
-                  height: "30px",
-                  backgroundColor: "red",
-                  color: "white",
-                  fontSize: "1em",
+                  position: "sticky",
+                  right: "12px",
+                  width: "480px",
+                  height: "150px",
+                  border: "3px solid rgb(0, 40, 85)",
+                  borderRadius: "5%",
                 }}
               >
-                Reserve
-              </button>
-            )}
-          </div>
-
+                <h3 style={{ marginLeft: "20px" }}>
+                  ${selected.price} per night
+                </h3>
+                <h4 style={{ marginLeft: "20px" }}>
+                  <FaStar />
+                  {rv.length > 0 ? `${average} Stars · ` : null}
+                  {rv.length === 0
+                    ? "New"
+                    : rv.length > 1
+                      ? `${rv.length} reviews`
+                      : `1 review`}
+                </h4>
+                {sessionUser && sessionUser?.id !== selected.ownerId && (
+                  <button
+                    onClick={() => window.alert("Feature coming soon...")}
+                    style={{
+                      marginLeft: "10px",
+                      marginRight: "15px",
+                      cursor: "pointer",
+                      width: "460px",
+                      height: "30px",
+                      backgroundColor: "red",
+                      color: "white",
+                      fontSize: "1em",
+                    }}
+                  >
+                    Reserve
+                  </button>
+                )}
               </div>
+            </div>
           </div>
         </div>
       )}

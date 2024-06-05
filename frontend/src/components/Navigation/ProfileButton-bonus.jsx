@@ -75,16 +75,23 @@ function ProfileButton({ user }) {
                 justifyItems: "center",
               }}
             >
-              <span>
-                Hello, {user.firstName}
-              </span>
+              <span>Hello, {user.firstName}</span>
               <br />
               {/* <li>{user.username}</li> */}
               <span>{user.email}</span>
               <br />
             </div>
-            <div style={{ width: "148px", borderBottom: "1px solid black", borderTop: "1px solid black" }}>
-              <NavLink to="/manage" style={{ paddingLeft: "18px" }}>
+            <div
+              style={{
+                width: "148px",
+                borderBottom: "1px solid black",
+                borderTop: "1px solid black",
+              }}
+            >
+              <NavLink
+                to="/manage"
+                style={{ paddingLeft: "18px", textDecoration: "none" }}
+              >
                 Manage Spots
               </NavLink>
               <br />

@@ -53,11 +53,7 @@ function LoginFormModal() {
           paddingBottom: "8px",
         }}
       />
-      {errorMessage && (
-        <p style={{ color: "red" }}>
-          {errorMessage}
-        </p>
-      )}
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       <form
         onSubmit={handleSubmit}
         style={{

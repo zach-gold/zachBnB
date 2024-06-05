@@ -56,16 +56,17 @@ const MakeReview = (props) => {
 
   let existing = reviews?.find((review) => review.userId === sessionUser);
   return (
-    <div>
+    <div style={{ height: "300px" }}>
       {sessionUser && sessionUser !== spotOwner && !existing && (
         <form onSubmit={onSubmit}>
-          <h2>How was your stay?</h2>
+          <h2 style={{ textAlign: "center" }}>How was your stay?</h2>
           <textarea
             name="reviewtext"
             id="reviewtext"
             placeholder="Leave your review here..."
             value={review}
             onChange={(e) => setReview(e.target.value)}
+            style={{ width: "300px", height: "150px" }}
           />
           <p className="errorMessage">
             {errors.filter((error) => error.includes("char"))}
@@ -73,7 +74,7 @@ const MakeReview = (props) => {
           {ratings.map((star, index) => {
             let starRating = index + 1;
             return (
-              <label key={starRating}>
+              <label key={starRating} style={{ marginLeft: "20px" }}>
                 <input
                   type="radio"
                   name="starRating"
@@ -98,8 +99,10 @@ const MakeReview = (props) => {
               </label>
             );
           })}
-          <span>{stars} Stars</span>
-          <button disabled={errors.length}>Submit Your Review</button>
+          <span>{stars} Stars</span> <br />
+          <button disabled={errors.length} style={{ width: "300px" }}>
+            Submit Your Review
+          </button>
         </form>
       )}
     </div>
