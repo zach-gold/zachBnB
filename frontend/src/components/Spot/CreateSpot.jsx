@@ -61,9 +61,57 @@ function CreateSpot() {
     if (previewImage.url.length < 1) {
       errArr.push("Preview image URL is required");
     }
-    //   if (previewImage.url.includes(".png") || previewImage.url.includes(".jpg") || previewImage.url.includes(".jpeg")) {
-    //       errArr.push("Image URL must end in .png, .jpg, or .jpeg");
-    //   }
+    if (
+      previewImage.url.length &&
+      !(
+        previewImage.url.endsWith(".png") ||
+        previewImage.url.endsWith(".jpg") ||
+        previewImage.url.endsWith(".jpeg") ||
+        previewImage.url.endsWith(".webp")
+      )
+    )
+      errArr.push("Preview Image URL needs to end in png or jpg (or jpeg)");
+    if (
+      img2.url.length &&
+      !(
+        img2.url.endsWith(".png") ||
+        img2.url.endsWith(".jpg") ||
+        img2.url.endsWith(".jpeg") ||
+        img2.url.endsWith(".webp")
+      )
+    )
+      errArr.push("Image URL 2 needs to end in png or jpg (or jpeg)");
+    if (
+      img3.url.length &&
+      !(
+        img3.url.endsWith(".png") ||
+        img3.url.endsWith(".jpg") ||
+        img3.url.endsWith(".jpeg") ||
+        img3.url.endsWith(".webp")
+      )
+    )
+      errArr.push("Image URL 3 needs to end in png or jpg (or jpeg)");
+    if (
+      img4.url.length &&
+      !(
+        img4.url.endsWith(".png") ||
+        img4.url.endsWith(".jpg") ||
+        img4.url.endsWith(".jpeg") ||
+        img4.url.endsWith(".webp")
+      )
+    )
+      errArr.push("Image URL 4 needs to end in png or jpg (or jpeg)");
+    if (
+      img5.url.length &&
+      !(
+        img5.url.endsWith(".png") ||
+        img5.url.endsWith(".jpg") ||
+        img5.url.endsWith(".jpeg") ||
+        img5.url.endsWith(".webp")
+      )
+    )
+      errArr.push("Image URL 5 needs to end in png or jpg (or jpeg)");
+
     setErrors(errArr);
   }, [
     name,
@@ -76,6 +124,10 @@ function CreateSpot() {
     description,
     price,
     previewImage.url,
+    img2.url,
+    img3.url,
+    img4.url,
+    img5.url,
   ]);
 
   async function handleSubmit(e) {
@@ -343,7 +395,20 @@ function CreateSpot() {
                 color: "red",
               }}
             >
-              {errors.filter((error) => error.includes("Preview"))}
+              {errors.filter((error) =>
+                error.includes("Preview image URL is required"),
+              )}
+            </p>
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {errors.filter((error) =>
+                error.includes(
+                  "Preview Image URL needs to end in png or jpg (or jpeg)",
+                ),
+              )}
             </p>
             <input
               type="text"
@@ -357,7 +422,17 @@ function CreateSpot() {
                 }))
               }
             />
-
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {errors.filter((error) =>
+                error.includes(
+                  "Image URL 2 needs to end in png or jpg (or jpeg)",
+                ),
+              )}
+            </p>
             <input
               type="text"
               placeholder="Image URL"
@@ -370,7 +445,17 @@ function CreateSpot() {
                 }))
               }
             />
-
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {errors.filter((error) =>
+                error.includes(
+                  "Image URL 3 needs to end in png or jpg (or jpeg)",
+                ),
+              )}
+            </p>
             <input
               id="image3Input"
               type="text"
@@ -383,6 +468,17 @@ function CreateSpot() {
                 }))
               }
             />
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {errors.filter((error) =>
+                error.includes(
+                  "Image URL 4 needs to end in png or jpg (or jpeg)",
+                ),
+              )}
+            </p>
             <input
               id="image4Input"
               type="text"
@@ -395,6 +491,17 @@ function CreateSpot() {
                 }))
               }
             />
+            <p
+              style={{
+                color: "red",
+              }}
+            >
+              {errors.filter((error) =>
+                error.includes(
+                  "Image URL 5 needs to end in png or jpg (or jpeg)",
+                ),
+              )}
+            </p>
             <input
               id="image5Input"
               type="text"
@@ -415,11 +522,12 @@ function CreateSpot() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // width: "500px",
+            width: "500px",
             marginLeft: "auto",
             marginRight: "auto",
             marginTop: "10px",
           }}
+          disabled={errors.length}
         >
           Create Spot
         </button>

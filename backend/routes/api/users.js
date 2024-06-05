@@ -20,12 +20,20 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isAlpha()
     .isLength({ min: 3, max: 30 })
-    .withMessage("FirstName is required"),
+    .withMessage("FirstName must be between 3 and 30 letters long"),
+  check("firstName")
+    .exists({ checkFalsy: true })
+    .isAlpha()
+    .withMessage("Firstname can only be composed of letters"),
   check("lastName")
     .exists({ checkFalsy: true })
     .isAlpha()
     .isLength({ min: 3, max: 30 })
-    .withMessage("Last Name is required"),
+    .withMessage("Last Name must be between 3 and 30 letters long"),
+  check("lastName")
+    .exists({ checkFalsy: true })
+    .isAlpha()
+    .withMessage("Firstname can only be composed of letters"),
 
   // check("password")
   //   .exists({ checkFalsy: true })

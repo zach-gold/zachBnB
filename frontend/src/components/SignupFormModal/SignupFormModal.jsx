@@ -148,10 +148,10 @@ function SignupFormModal() {
           type="submit"
           disabled={block}
           style={{
-            backgroundColor: "red",
+            //backgroundColor: "red",
             width: "290px",
             height: "30px",
-            color: "white",
+            //color: "white",
             alignSelf: "center",
             marginTop: "5px",
             marginBottom: "5px",

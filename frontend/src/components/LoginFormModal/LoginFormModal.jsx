@@ -34,7 +34,7 @@ function LoginFormModal() {
     if (credential.length < 4 || password.length < 6) {
       setSubmitBlock(true);
     }
-    if (credential.length > 4 && password.length > 6) {
+    if (credential.length >= 4 && password.length >= 6) {
       setSubmitBlock(false);
     }
   }, [credential, password]);

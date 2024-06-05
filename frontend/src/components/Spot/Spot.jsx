@@ -26,7 +26,7 @@ function DetailsPage() {
   let reviews = useSelector((state) => state.reviews);
   let rv = Object.values(reviews);
   //console.log("Reviews: " + rv);
-  //let reversedReviews = rv.reverse();
+  let reversedReviews = rv.reverse();
   //console.log("reversedReviews: " + reversedReviews);
   const handleDelete = async () => {
     const reviewToDelete = rv.find(
@@ -96,7 +96,7 @@ function DetailsPage() {
           </header>
           <div className="spotDetailsImages">
             <img
-              src={selected?.SpotImages?.[0].url}
+              src={selected?.SpotImages?.[0]?.url || noImg}
               alt={`Spot ${spotId} preview image`}
               className="largeThumbnail"
             />
@@ -176,7 +176,7 @@ function DetailsPage() {
                         </button>
                       )}
                     <ul style={{ listStyle: "none" }}>
-                      {rv.map((review) => (
+                      {reversedReviews.map((review) => (
                         <li key={review.id}>
                           <h4>
                             {review?.User?.firstName +
@@ -210,13 +210,6 @@ function DetailsPage() {
                                   Are you sure you want to delete this review?
                                 </p>
                                 <button
-                                  style={{
-                                    backgroundColor: "grey",
-                                    color: "White",
-                                  }}
-                                  onClick={toggleDeleteModal}
-                                >{`No (Keep Review)`}</button>
-                                <button
                                   style={{ backgroundColor: "red" }}
                                   onClick={() => {
                                     handleDelete(); // console.log(review.id);
@@ -224,6 +217,13 @@ function DetailsPage() {
                                 >
                                   {`Yes (Delete Review)`}
                                 </button>
+                                <button
+                                  style={{
+                                    backgroundColor: "grey",
+                                    color: "White",
+                                  }}
+                                  onClick={toggleDeleteModal}
+                                >{`No (Keep Review)`}</button>
                               </div>
                             </div>
                           )}
