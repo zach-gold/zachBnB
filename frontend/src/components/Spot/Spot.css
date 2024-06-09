@@ -30,3 +30,7 @@
   text-decoration: none;
   color: black;
 }
+
+.review:hover{
+  cursor: pointer;
+}

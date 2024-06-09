@@ -160,7 +160,7 @@ function DetailsPage() {
                     {sessionUser &&
                       sessionUser.id !== selected.ownerId &&
                       !existing && (
-                        <button
+                        <button className="review"
                           onClick={toggleModal}
                           style={{
                             fontWeight: "550",
