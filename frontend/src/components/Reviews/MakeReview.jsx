@@ -6,22 +6,25 @@ import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 //import { useModal } from "../../context/Modal";
 import "./modal.css";
+
+
 const MakeReview = (props) => {
   let dispatch = useDispatch();
   let { spotId } = useParams();
+
   let reviews = useSelector((state) => state.reviews);
   reviews = Object.values(reviews);
+
   let sessionUser = useSelector((state) => state.session.user?.id);
   let spotOwner = useSelector((state) => state.spots?.[spotId].ownerId);
+
   const [review, setReview] = useState("");
   const [active, setActive] = useState(0);
   const [stars, setStars] = useState(0);
   const [errors, setErrors] = useState([]);
   const [filled, setFilled] = useState(0);
   const ratings = [1, 2, 3, 4, 5];
-  //const [showModal, setShowModal] = useState(false);
 
-  // Function to open and close modal
 
   useEffect(() => {
     let arr = [];
@@ -36,7 +39,6 @@ const MakeReview = (props) => {
 
   function resetStates() {
     setReview("");
-    // setActive(null);
     setStars(0);
     setErrors([]);
   }

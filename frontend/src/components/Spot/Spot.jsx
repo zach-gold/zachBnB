@@ -140,8 +140,8 @@ function DetailsPage() {
                         {/* ) : null} */}
                         {rv.length > 0
                           ? average % 1 !== 0
-                            ? `${average} Stars · `
-                            : `${stringAvg} Stars · `
+                            ? ` ${average} Stars · `
+                            : ` ${stringAvg} Stars · `
                           : ""}
                       </h3>
 
@@ -210,7 +210,7 @@ function DetailsPage() {
                                   Are you sure you want to delete this review?
                                 </p>
                                 <button
-                                  style={{ backgroundColor: "red" }}
+                                  style={{ backgroundColor: "red", color:"white" }}
                                   onClick={() => {
                                     handleDelete(); // console.log(review.id);
                                   }}
@@ -250,7 +250,7 @@ function DetailsPage() {
                 </h3>
                 <h4 style={{ marginLeft: "20px" }}>
                   <FaStar />
-                  {rv.length > 0 ? `${average} Stars · ` : null}
+                  {rv.length > 0 ? ` ${average} Stars · ` : null}
                   {rv.length === 0
                     ? "New"
                     : rv.length > 1

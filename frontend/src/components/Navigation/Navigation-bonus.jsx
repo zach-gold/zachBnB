@@ -59,7 +59,7 @@ function Navigation({ isLoaded }) {
               paddingRight: "8px",
               fontWeight: "550",
               textDecoration: "none",
-              color: "lightblue",
+              color: "#209CEE",
             }}
           >
             Create a New Spot

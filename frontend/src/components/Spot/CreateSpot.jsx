@@ -202,7 +202,7 @@ function CreateSpot() {
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
-          </label>
+          </label><br />
           <div id="addressInputContainer">
             <label
               htmlFor="streetAddress"
@@ -225,7 +225,7 @@ function CreateSpot() {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </label>
-          </div>
+          </div><br />
           <div style={{ display: "flex", gap: "30px" }}>
             <label htmlFor="city">
               City

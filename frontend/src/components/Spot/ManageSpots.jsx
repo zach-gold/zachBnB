@@ -105,7 +105,7 @@ function ManageSpots() {
                     <div>
                       <button
                         onClick={() => handleDelete(spot.id)}
-                        style={{ backgroundColor: "red" }}
+                        style={{ backgroundColor: "red", color:"white" }}
                       >{`Yes (Delete Spot)`}</button>
                       <button
                         onClick={toggleModal}

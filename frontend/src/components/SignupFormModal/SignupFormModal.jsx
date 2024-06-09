@@ -60,7 +60,7 @@ function SignupFormModal() {
   }, [email, username, firstName, lastName, password, confirmPassword]);
 
   return (
-    <div className="signUpBox">
+    <div className="signUpBox" style={{display:"flex", height:"650px"}}>
       <h1 style={{ textAlign: "center" }}>Sign Up</h1>
       <form
         onSubmit={handleSubmit}
