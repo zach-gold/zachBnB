@@ -102,19 +102,19 @@ function ProfileButton({ user }) {
           </>
         ) : (
           <div className="profilemenu" style={{ alignItems: "left", cursor:"pointer" }}>
-            <div style={{fontSize:"18px", fontWeight:"550", borderBottom:"1px solid black"}}><OpenModalMenuItem
+            <div style={{fontSize:"18px", fontWeight:"550", borderBottom:"1px solid black", paddingBottom:"4px"}}><OpenModalMenuItem
               itemText="Sign Up"
               onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
               </div>
-              <span style={{fontSize:"18px", fontWeight:"550"}}>
+              <div style={{ fontSize: "18px", fontWeight: "550", paddingTop:"4px" }}>
             <OpenModalMenuItem
               itemText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
                 />
-                </span>
+                </div>
           </div>
         )}
       </div>
